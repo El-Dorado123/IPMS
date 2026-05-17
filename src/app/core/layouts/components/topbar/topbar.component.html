@@ -1,149 +1,70 @@
-<header class="topbar" (mouseleave)="closeMenus()">
-  <a class="brand" routerLink="/app/dashboard" aria-label="IPMS Dashboard">
-    <span class="brand-main">IPMS</span>
-    <span class="brand-sub">Property Management</span>
-  </a>
+<p-menubar [model]="items" class="app-menubar">
+  <ng-template pTemplate="start">
+    <button class="brand-mark" type="button" aria-label="PGOFY Dashboard" (click)="goToHome()">
+      @if(themeService.isDark()){
+      <img src="pagofy-logo-dark.png" alt="PAGOFY" class="logo !h-[2.7rem] pt-1 logo-dark" />
+      }@else{
+      <img src="pagofy-logo.png" alt="PAGOFY" class="logo w-full logo-light" />
+      }
+    </button>
+  </ng-template>
 
-  <nav class="main-menu" aria-label="Main menu">
-    @for (item of primaryMenuItems(); track item.route) {
-      <div
-        class="menu-node"
-        [class.is-open]="isMenuOpen(item.route)"
-        (mouseenter)="item.children?.length && openMenu(item.route)"
-        (focusin)="item.children?.length && openMenu(item.route)"
-      >
-        <a class="menu-link" [routerLink]="item.route" routerLinkActive="is-active" (click)="closeMenus()">
-          @if (item.icon) {
-            <i [class]="item.icon" aria-hidden="true"></i>
-          }
-          <span>{{ item.label }}</span>
-          @if (item.children?.length) {
-            <i class="pi pi-chevron-down chevron" aria-hidden="true"></i>
-          }
-        </a>
-
-        @if (item.children?.length) {
-          <div class="dropdown-menu menu-dropdown">
-            @for (child of item.children; track child.route) {
-              <a [routerLink]="child.route" routerLinkActive="is-active" (click)="closeMenus()">
-                <span>{{ child.label }}</span>
-              </a>
-            }
-          </div>
-        }
-      </div>
-    }
-
-    @if (moreMenuItems().length) {
-      <div
-        class="menu-node more-node"
-        [class.is-open]="isMenuOpen('more')"
-        (mouseenter)="openMenu('more')"
-        (focusin)="openMenu('more')"
-      >
-        <button
-          class="menu-link menu-button"
-          type="button"
-          [attr.aria-expanded]="isMenuOpen('more')"
-          (click)="toggleMenu('more')"
-        >
-          <i class="pi pi-th-large" aria-hidden="true"></i>
-          <span>More</span>
-          <i class="pi pi-chevron-down chevron" aria-hidden="true"></i>
-        </button>
-
-        <div class="dropdown-menu more-dropdown">
-          @for (item of moreMenuItems(); track item.route) {
-            <section class="more-section">
-              <a class="more-title" [routerLink]="item.route" routerLinkActive="is-active" (click)="closeMenus()">
-                @if (item.icon) {
-                  <i [class]="item.icon" aria-hidden="true"></i>
-                }
-                <span>{{ item.label }}</span>
-              </a>
-
-              @if (item.children?.length) {
-                <div class="more-children">
-                  @for (child of item.children; track child.route) {
-                    <a [routerLink]="child.route" routerLinkActive="is-active" (click)="closeMenus()">
-                      {{ child.label }}
-                    </a>
-                  }
-                </div>
-              }
-            </section>
-          }
-        </div>
-      </div>
-    }
-  </nav>
-
-  <div class="top-actions">
-    <label class="search">
-      <i class="pi pi-search" aria-hidden="true"></i>
-      <input type="search" placeholder="Search" (focus)="closeMenus()" />
-    </label>
-
-    <div class="dropdown" [class.is-open]="isMenuOpen('quick-actions')" (mouseenter)="openMenu('quick-actions')">
-      <button
-        class="action-button"
-        type="button"
-        [attr.aria-expanded]="isMenuOpen('quick-actions')"
-        (click)="toggleMenu('quick-actions')"
-      >
-      <i class="pi pi-plus" aria-hidden="true"></i>
-        <span>Quick Actions</span>
+  <ng-template pTemplate="end">
+    <div class="menubar-end desktop-only">
+      <button class="topbar-icon-button" type="button" aria-label="Change language" (click)="goToLanguage()">
+        <i class="pi pi-language" aria-hidden="true"></i>
       </button>
-      <div class="dropdown-menu">
-        @for (action of quickActions; track action.route) {
-          <a [routerLink]="action.route" (click)="closeMenus()">
-            @if (action.icon) {
-              <i [class]="action.icon" aria-hidden="true"></i>
-            }
-            <span>{{ action.label }}</span>
-          </a>
-        }
+      <button class="topbar-icon-button" type="button" aria-label="Toggle theme" (click)="toggleTheme()">
+        <i class="pi" [ngClass]="themeIcon()" aria-hidden="true"></i>
+      </button>
+      <button class="topbar-icon-button" type="button" aria-label="Theme menu" (click)="goToThemeSettings()">
+        <i class="pi pi-palette" aria-hidden="true"></i>
+      </button>
+      <i class="pi pi-bell cursor-pointer theme-icon" aria-label="Notifications" (click)="goToNotifications()"></i>
+      <i class="pi pi-user cursor-pointer theme-icon" aria-label="Profile" (click)="showProfileDrawer()"></i>
+    </div>
+  </ng-template>
+</p-menubar>
+
+<p-drawer [(visible)]="showProfile" position="right" styleClass="profile-drawer" [modal]="true" [showCloseIcon]="true">
+  <div class="profile-panel">
+    <div class="profile-summary">
+      <p-avatar [image]="profileDetails().profile_url || ''"
+        [label]="profileDetails().profile_url ? undefined : profileDetails().name.charAt(0)" size="xlarge"
+        shape="circle" styleClass="profile-avatar"></p-avatar>
+
+      <div class="profile-copy">
+        <div class="profile-name">{{ profileDetails().name | uppercase }}</div>
+        <div class="profile-plan">{{ profileDetails().plan_name }}</div>
       </div>
     </div>
 
-    <button class="icon-button" type="button" aria-label="Language switcher" (click)="closeMenus()">
-      <i class="pi pi-language" aria-hidden="true"></i>
-    </button>
+    <p-divider></p-divider>
 
-    <button class="icon-button" type="button" aria-label="Toggle light or dark mode" (click)="closeMenus()">
-      <i class="pi pi-moon" aria-hidden="true"></i>
-    </button>
-
-    <button class="icon-button" type="button" aria-label="Theme customizer" (click)="closeMenus()">
-      <i class="pi pi-palette" aria-hidden="true"></i>
-    </button>
-
-    <button class="icon-button notification" type="button" aria-label="Notifications" (click)="closeMenus()">
-      <i class="pi pi-bell" aria-hidden="true"></i>
-      <span></span>
-    </button>
-
-    <div class="dropdown profile" [class.is-open]="isMenuOpen('profile')" (mouseenter)="openMenu('profile')">
-      <button
-        class="profile-button"
-        type="button"
-        aria-label="Profile menu"
-        [attr.aria-expanded]="isMenuOpen('profile')"
-        (click)="toggleMenu('profile')"
-      >
-        <i class="pi pi-user" aria-hidden="true"></i>
-        <i class="pi pi-angle-down" aria-hidden="true"></i>
-      </button>
-      <div class="dropdown-menu align-right">
-        @for (item of profileMenu; track item.route) {
-          <a [routerLink]="item.route" (click)="closeMenus()">
-            @if (item.icon) {
-              <i [class]="item.icon" aria-hidden="true"></i>
-            }
-            <span>{{ item.label }}</span>
-          </a>
+    <div class="profile-menu">
+      @for (item of profileMenuItems; track item.route) {
+      <button class="profile-menu-item" type="button" (click)="onProfileMenuClick(item)" pRipple>
+        @if (item.icon) {
+        <i [class]="item.icon" aria-hidden="true"></i>
         }
-      </div>
+        <span>{{ item.label }}</span>
+      </button>
+      }
     </div>
+
+    <p-divider></p-divider>
+
+    <button class="profile-menu-item sign-out" type="button" (click)="signOut()" pRipple>
+      <i class="pi pi-sign-out" aria-hidden="true"></i>
+      <span>Sign Out</span>
+    </button>
   </div>
-</header>
+</p-drawer>
+
+<footer class="topbar-footer">
+  <div class="footer-content">
+    <span>&copy; {{ currentYear }} | IPMS. All rights reserved.</span>
+    <span class="footer-separator">|</span>
+    <button type="button" class="release-button" (click)="goToReleaseNotes()">What's New</button>
+  </div>
+</footer>

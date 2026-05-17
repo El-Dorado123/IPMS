@@ -96,52 +96,37 @@ export const menuConfig: MenuItemConfig[] = [
       { label: 'Access Control', route: '/app/administration/access-control' },
     ],
   },
-  {
-    label: 'Visitors & Leads',
-    route: '/app/visitors',
-    icon: 'pi pi-id-card',
-    children: [
-      { label: 'Visitor Entry', route: '/app/visitors/entry' },
-      { label: 'Lead Management', route: '/app/visitors/leads' },
-      { label: 'Follow-Ups', route: '/app/visitors/follow-ups' },
-      { label: 'Conversion Analytics', route: '/app/visitors/conversion-analytics' },
-    ],
-  },
-  {
-    label: 'Scanner',
-    route: '/app/scanner',
-    icon: 'pi pi-qrcode',
-    children: [
-      { label: 'QR Scanner', route: '/app/scanner/qr' },
-      { label: 'Visitor Scanner', route: '/app/scanner/visitor' },
-      { label: 'Share PG Details', route: '/app/scanner/share-pg-details' },
-    ],
-  },
-  {
-    label: 'Support',
-    route: '/app/support',
-    icon: 'pi pi-question-circle',
-    children: [
-      { label: 'Support Tickets', route: '/app/support/tickets' },
-      { label: 'Complaints', route: '/app/support/complaints' },
-      { label: 'Feedback', route: '/app/support/feedback' },
-    ],
-  },
-  {
-    label: 'Settings',
-    route: '/app/settings',
-    icon: 'pi pi-cog',
-    children: [
-      { label: 'Appearance', route: '/app/settings/appearance' },
-      { label: 'Themes', route: '/app/settings/themes' },
-      { label: 'Language', route: '/app/settings/language' },
-      { label: 'Branding', route: '/app/settings/branding' },
-      { label: 'Invoice Settings', route: '/app/settings/invoice' },
-      { label: 'Notification Settings', route: '/app/settings/notifications' },
-      { label: 'Security Settings', route: '/app/settings/security' },
-      { label: 'Integrations', route: '/app/settings/integrations' },
-    ],
-  },
+  // {
+  //   label: 'Visitors & Leads',
+  //   route: '/app/visitors',
+  //   icon: 'pi pi-id-card',
+  //   children: [
+  //     { label: 'Visitor Entry', route: '/app/visitors/entry' },
+  //     { label: 'Lead Management', route: '/app/visitors/leads' },
+  //     { label: 'Follow-Ups', route: '/app/visitors/follow-ups' },
+  //     { label: 'Conversion Analytics', route: '/app/visitors/conversion-analytics' },
+  //   ],
+  // },
+  // {
+  //   label: 'Scanner',
+  //   route: '/app/scanner',
+  //   icon: 'pi pi-qrcode',
+  //   children: [
+  //     { label: 'QR Scanner', route: '/app/scanner/qr' },
+  //     { label: 'Visitor Scanner', route: '/app/scanner/visitor' },
+  //     { label: 'Share PG Details', route: '/app/scanner/share-pg-details' },
+  //   ],
+  // },
+  // {
+  //   label: 'Support',
+  //   route: '/app/support',
+  //   icon: 'pi pi-question-circle',
+  //   children: [
+  //     { label: 'Support Tickets', route: '/app/support/tickets' },
+  //     { label: 'Complaints', route: '/app/support/complaints' },
+  //     { label: 'Feedback', route: '/app/support/feedback' },
+  //   ],
+  // },
 ];
 
 export const quickActionsConfig: MenuItemConfig[] = [
